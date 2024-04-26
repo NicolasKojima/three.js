@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,19 +12,42 @@
             background: -webkit-linear-gradient(to top, #1CB5E0, #000046);  /* Chrome 10-25, Safari 5.1-6 */
             background: linear-gradient(to top, #1CB5E0, #000046); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         }
+        /* Style for the stars */
+        .stars {
+            position: fixed;
+            top: 0;
+            width: 2px;
+            height: 2px;
+            background: #ffffff;
+            box-shadow: 0 0 2px #ffffff;
+            animation: star-fall 20s linear infinite;
+            z-index: 9999;
+        }
+        @keyframes star-fall {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+        @media screen and (max-width: 768px) {
+            .stars { opacity: 0.5; }
+        }
     </style>
 </head>
-
 <body id="body">
     <div id="WebGL-output"></div>
     <div id="app"></div>
     <script type="module" src="/main.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/103/three.min.js"></script>
-  
     <script src="https://unpkg.com/three@0.104.0/examples/js/controls/OrbitControls.js"></script>
-  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+    <script>
+        // JavaScript to create stars and animate them
+        for (let i = 0; i < 400; i++) {
+            const star = document.createElement('div');
+            star.className = 'stars';
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 20}s`;
+            document.body.appendChild(star);
+        }
+    </script>
 </body>
-
 </html>

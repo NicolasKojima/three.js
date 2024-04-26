@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style> 
+    .background {
+        background-color: black;
+        width: 100vw;
+        height: 100vh;
+    }
+    .stars {
+        top: 0;
+        position: relative;
+        width: 1px;
+        height: 1px;
+        background: #ffffff; /* Star color */
+        box-shadow: 0 0 2px #ffffff; /* Add glow effect */
+        animation: star-fall 20s linear infinite; /* Adjust the animation speed */
+        z-index:9999;
+    }
+
+    @keyframes star-fall {
+        0% {
+            transform: translateY(-100vh); /* Initial position off-screen at the top */
+        }
+        100% {
+            transform: translateY(100vh); /* Final position off-screen at the bottom */
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+      .stars {
+        opacity: 0.5;
+      }
+    }
+</style>
+</head>
+<body>
+    <div class="background"></div>
+<script>
+for (let i = 0; i < 400; i++) {
+    const star = document.createElement('div');
+    star.className = 'stars';
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.animationDelay = `${Math.random() * 20}s`; /* Randomize animation delays */
+    document.body.appendChild(star);
+}
+</script>
+
+</body>
+</html>
