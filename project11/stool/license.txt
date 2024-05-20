@@ -1,0 +1,11 @@
+Model Information:
+* title:	Stool
+* source:	https://sketchfab.com/3d-models/stool-fa2ec7896f044e09957bcec0b9d77405
+* author:	joonanen (https://sketchfab.com/joonanen)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Stool" (https://sketchfab.com/3d-models/stool-fa2ec7896f044e09957bcec0b9d77405) by joonanen (https://sketchfab.com/joonanen) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Low Poly Campfire
+* source:	https://sketchfab.com/3d-models/low-poly-campfire-695c62069ac44614acbfc6effcf7499d
+* author:	MrE_Sauce (https://sketchfab.com/MrE_Sauce)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Low Poly Campfire" (https://sketchfab.com/3d-models/low-poly-campfire-695c62069ac44614acbfc6effcf7499d) by MrE_Sauce (https://sketchfab.com/MrE_Sauce) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

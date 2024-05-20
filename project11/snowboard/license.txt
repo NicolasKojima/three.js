@@ -1,0 +1,11 @@
+Model Information:
+* title:	Juha Sulkakoski's Snowboard Prototype
+* source:	https://sketchfab.com/3d-models/juha-sulkakoskis-snowboard-prototype-8d9a1cf1e03441a99d08611f6d493327
+* author:	urheilumuseo (https://sketchfab.com/urheilumuseo)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Juha Sulkakoski's Snowboard Prototype" (https://sketchfab.com/3d-models/juha-sulkakoskis-snowboard-prototype-8d9a1cf1e03441a99d08611f6d493327) by urheilumuseo (https://sketchfab.com/urheilumuseo) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
