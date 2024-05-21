@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <!-- <title> Welcome to Nicolas' Website uwu </title> -->
+    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/album/">
+    <style>
+        .link-title-layer3 {
+            color: white; 
+            text-decoration: none; 
+            font-family: 'Arial', sans-serif;
+            font-size: 30px;
+            top: 40px;
+            position: absolute;
+        }
+      .container {
+          position: relative;
+          width: 100%;
+          height: 100vh; /* Set the container height to the viewport height */
+          margin-top:20px;
+      }
+
+      .buttons {
+          display: flex; /* Display the buttons in a row */
+          justify-content: flex-start; /* Align buttons to the left */
+      }
+
+      .button {
+          margin-right: 10px; 
+          width:160px;
+      }
+
+      .layer {
+          position: fixed; /* Set the layer position to fixed */
+          width: 100%;
+          height: 100%;
+          display: none; /* Initial visibility set to "hidden" */
+          transition: all 0.5s;
+        }
+
+      /* .layer1 {
+          background: rgba(255, 0, 0, 0.5);
+      } */
+
+      /* .layer3 {
+          background: rgba(0, 0, 255, 0.5);
+      } */
+
+      .expanded {
+
+          width: 100vw; /* 100% of the viewport width */
+          position: fixed; /* Ensure it's fixed to the viewport */
+          top: 0;
+          left: 0;
+          background: url('/Website/images/space.jpg') no-repeat center center fixed;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+          position: fixed;
+          background-color: black;
+      }
+
+      .close-button {
+          position: absolute;
+          top: 1vh;
+          right: 10px;
+          background: #fff;
+          padding: 5px 10px;
+          cursor: pointer;
+          border-radius: 10px;
+      }
+
+      .content {
+        top: 0;
+      }
+
+
+      .expanded {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden; /* Hide overflow for the outer container */
+      }
+
+      /* Style for the scrollable inner container */
+      .scrollable-expanded {
+        width: 100%;
+        overflow-y: auto; /* Enable vertical scrollbar */
+        flex: 1; /* Allow the container to grow within the parent */
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Adjusted style for about-container */
+      .about-container-left {
+        left:0 !important;
+        width: 93%;
+        height: auto;
+        background-color: white;
+        margin-top: 20px;
+        flex-shrink: 0; 
+        border-top-right-radius: 10px; /* Adjust as needed */
+        border-bottom-right-radius: 10px; /* Adjust as needed */
+        font-family: 'Times New Roman', Times, serif !important;
+        font-size: 17px;
+      }
+
+      .about-container-right {
+        right: 0 !important;
+        width: 93%;
+        height: auto;
+        background-color: white;
+        margin-top: 20px;
+        flex-shrink: 0; 
+        border-top-left-radius: 10px; /* Adjust as needed */
+        border-bottom-left-radius: 10px; /* Adjust as needed */
+        margin-left:7%;
+        font-family: 'Times New Roman', Times, serif !important;
+        font-size: 17px;
+      }
+
+      .about-title{
+        font-size:30px;
+        margin-bottom: 10px;
+        background-color: white !important;
+      }
+
+
+      /* Additional styles for responsiveness */
+      @media screen and (max-width: 768px) {
+        .text-content {
+          top: 0 !important;
+          display: flex;
+          flex-direction: column;
+          margin-top:20vh !important;
+          left: 2% !important;
+        }
+
+        .name {
+          margin-top: 1.2vw !important; /* Adjust spacing between name and previous text */
+          font-size: xx-large !important;
+          font-weight: 700;
+        }
+
+
+
+        .job {
+          text-align: center; 
+          margin-top: 0.1vh !important; /* Adjust spacing between job and buttons */
+          font-size: large !important;
+          font-weight: 700;
+        }
+
+        .buttons {
+          display: flex;
+          flex-direction: column;
+          left: 0;
+        }
+
+        .button {
+          margin-top: 1vh;
+        }
+
+        .text {
+          font-size:medium !important;
+        }
+
+        .content {
+          padding: 10px !important;
+        }
+
+        .self-intro {
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        }
+
+        .job {
+        display: flex;
+            flex-wrap: wrap;
+            /* Additional styles for job container */
+        }
+
+        .aspiring-text {
+            display: none; /* Initially hide the aspiring text */
+        }
+
+        .typing-text {
+            display: inline-block;
+            margin-left:20px;
+
+        }
+      }
+        /* Media query for screens smaller than 400px */
+        @media screen and (max-width: 400px) {
+            .job {
+                flex-direction: column; 
+                text-align:unset !important;
+                margin-top: 10px !important;
+            }
+
+            .aspiring-text {
+                display: block; 
+                margin-left: 20px !important;
+            }
+            .typing-text {
+            display: inline-block;
+            margin-left:20px !important;
+            }
+        }
+        .stars {
+            top: 0;
+            position: relative;
+            width: 1px;
+            height: 1px;
+            background: #ffffff; /* Star color */
+            box-shadow: 0 0 2px #ffffff; /* Add glow effect */
+            animation: star-fall 20s linear infinite; /* Adjust the animation speed */
+            z-index:9999;
+        }
+
+        @keyframes star-fall {
+            0% {
+                transform: translateY(-100vh); /* Initial position off-screen at the top */
+            }
+            100% {
+                transform: translateY(100vh); /* Final position off-screen at the bottom */
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+          .stars {
+            opacity: 0.5;
+          }
+        }
+  </style>
+  </head>
+<body>
+  <script>
+    for (let i = 0; i < 400; i++) {
+        const star = document.createElement('div');
+        star.className = 'stars';
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.animationDelay = `${Math.random() * 20}s`; /* Randomize animation delays */
+        document.body.appendChild(star);
+    }
+</script>
+
+  <header>
+    <nav>
+      
+      <div class="background-snow" style="background-color:black;"></div>
+      <div class="background-stars"></div>
+        <div class="navbar">
+          <div class="logo">
+            <!-- <i class="fa-duotone fa-snowflake" class="img " style="--fa-primary-color: #ffffff; --fa-secondary-color: #a6b3c9;"></i> -->
+          </div>
+          <div id="wrap">
+            <ul class="menu" class="navbar">
+              <li class="dropdown">
+                <a href="#" class="dropbtn">Resume</a>
+                <div class="dropdown-content">
+                
+                  <a href="images/resume.pdf" >English</a>
+                  <a href="images/rirekisho.pdf" >Japanese</a>
+                </div>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropbtn">SNS</a>
+                <div class="dropdown-content">
+                    <a href="https://www.facebook.com/nicolas.kojima.7/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://github.com/NicolasKojima"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/nicolas-kojima-kallas/"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="content">
+        <div class="text-content">
+          <div class="self-intro">
+            <div class="text" style="margin-bottom: 1vh;">Hello, my name is </div>
+            <div class="name">Nicolas Kojima</div>
+            <div class="job">
+              <span class="aspiring-text"> I'm an aspiring </span>
+              <div class="typing-text">
+                <span> {{ </span>
+                <span class="one"> Software Engineer </span>
+                <span> }} </span>
+              </div>
+            </div>
+          </div>
+            <div class="container">
+            <div class="buttons">
+                <button class="button" id="layer1Button">About me</button>
+                <button class="button" id="layer2Button">Git Hub</button>
+                <button class="button" id="layer3Button">Developed Web Applications</button>
+            </div>
+            
+            <script>
+                document.getElementById('layer1Button').addEventListener('click', function() {
+                    document.getElementById('layer1').style.display = 'block'; // Show the layer
+                    document.body.style.backgroundColor = 'transparent'; // Make background transparent
+                });
+            
+                // Add event listener for closing Layer 1
+                document.getElementById('closeLayer1Button').addEventListener('click', function() {
+                    document.getElementById('layer1').style.display = 'none'; // Hide the layer
+                    document.body.style.backgroundColor = ''; // Reset background
+                });
+            </script>
+            
+            <div class="layer" id="layer1">
+                /* Layer 1 Content */
+                <div class="expanded" style="display: flex; flex-direction: column; height: 100%; ">
+                  <h2 style="color: white; text-align: center; margin-top: 20px; margin-bottom: 20px;"></h2>
+                  <div class="close-button" id="closeLayer1Button">Close</div>
+                  <!-- Scrollable container -->
+                  <div class="scrollable-expanded">
+                    <!-- Add content in about-container divs for scrolling -->
+                    <div class="about-container-left">
+                      <div class="  acontent">
+                        <div class="  aimg">
+                          <img src="images/refugee.jpg" alt="Your Image">
+                          <div strong class="about-title">Volunteer Work</div>
+                            IRIS (ICU Refugee Immigrant Solidarity) is a student-led organization that an underclassman and I founded at ICU (International Christian University) in 2021. The organization aims to provide support to Refugees and Immigrants who are living in Tokyo. <br><br>Activities of the organization include Food Drives, Refugee Cafes, Translational Services, Seminars, Detention Center visits, and spreading awareness regarding the issues surrounding Refugees and Immigrants across Japan.
+                            <br>The organization has been featured in local newspapers and university newsletters and currently boasts 40+ members. 
+                        </div>
+                      </div>
+                    </div>
+                    <div class="about-container-right">
+                      <div class="  acontent">
+                        <div class="  aimg">
+                          <img src="images/cybersecurity.jpg" alt="Your Image">
+                          <div strong class="about-title">Interests</div>
+                            My most foundational and core interests have always been art, nature, and anything that I do not know or cannot at that moment understand in general. Recently, I have been extremely devoted to aligning my interests with my desired career path. With this, I have been very intrigued and passionate about all topics, news, and developments within the IT industry.<br><br> Specifically, one of my most passionate interests and goals lies in cyber security. I am currently studying for the Network+ certification which is offered by the CompTIA. Besides the fact that cyber security is one of the fastest-growing and in-demand fields of IT, I am interested in cyber security because it allows me to improve the security and privacy of myself, those around me, my company, and my company’s clients. I wish to become knowledgeable to a point in which I believe that my work contributes to the bettering of people’s lives.<br><br> Beyond Cyber Security, however, I am also very interested in topics surrounding: Web Development , AGI’s (Artificial General Intelligence), Big Data, and Data Structures.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="about-container-left">
+                      <div class="  acontent">
+                        <div class="  aimg">
+                          <img src="images/books.jpg" alt="Your Image">
+                          <div strong class="about-title">Hobbies</div>
+                          One of my favorite hobbies is reading non-fiction works. I have indulged in books across various fields such as Economics, Philosophy, Self-Management, Politics, Bibliographies, and Data Science.<br>
+                            <br>Some of my favorite books include: 
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shackleton’s Way - Margot Morrell and Stephanie Capparell
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Liar’s Poker - Michael Lewis
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Justice - Michael J. Sandel
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Denial of Death - Ernest Becker
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7 Habits of Highly Efficient People - Stephen Covey
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The World is Flat - Thomas Friedman
+                        </div>
+                      </div></div>
+                    <div class="about-container-right"></div>
+                    <div class="about-container-left"></div>
+                    <div class="about-container-right"></div>
+                    <!-- Add more content as needed -->
+                  </div>
+                </div>
+              </div>
+            <div class="layer" id="layer2">
+              <!-- Layer 2 Content -->
+              <div class="expanded" style="display: flex; flex-direction: column;  justify-content: center; align-items: center; height: 100%;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+                  <!-- Astronaut Body -->
+                  <circle cx="50" cy="50" r="45" fill="" />
+                
+                  <!-- Astronaut Helmet -->
+                  <ellipse cx="50" cy="35" rx="25" ry="18" fill="white" />
+                  <ellipse cx="50" cy="35" rx="23" ry="15" fill="" />
+                
+                  <!-- Astronaut Visor -->
+                  <rect x="40" y="30" width="20" height="20" fill="" />
+                
+                  <!-- Astronaut Suit -->
+                  <path d="M50,55 L60,80 L40,80 Z" fill="white" />
+                
+                  <!-- Astronaut Arm -->
+                  <line x1="50" y1="60" x2="35" y2="75" stroke="white" stroke-width="3" />
+                  <line x1="50" y1="60" x2="65" y2="75" stroke="white" stroke-width="3" />
+                </svg>
+                
+                  <h2 style="color: white; text-align: center;">GitHub Profile</h2>
+                  <p style="color: white; text-align: center;">Explore my GitHub profile:</p>
+                  <a href="https://github.com/NicolasKojima" style="color: white; text-align: center; display: block; font-size: 18px;" target="_blank">GitHub Profile</a>
+                  <div class="close-button" id="closeLayer2Button">Close</div>
+                </div>
+            </div>
+            <div class="layer" id="layer3">
+                <div class="expanded" style="display: flex; flex-direction: column;  justify-content: center; align-items: center; height: 100%;">
+                    <div class="link-title-layer3"> Developed Applications </div>
+                    <a href="snowhouse/index.html" target="_blank" style="margin-bottom: 20px; color: white; text-decoration: none; font-family: 'Arial', sans-serif;">three.JS project - snowhouse </a>
+                    <a href="notes-app/public/index.html" target="_blank" style="margin-bottom: 20px; color: white; text-decoration: none; font-family: 'Arial', sans-serif;">To-Do List Application</a>
+                    <a href="blog-app/public/bloghome.php" target="_blank" style="margin-bottom: 20px; color: white; text-decoration: none; font-family: 'Arial', sans-serif;">Personal Blog Application</a>
+                    <a href="ProjectManagementApplication/public" target="_blank" style="margin-bottom: 20px; color: white; text-decoration: none; font-family: 'Arial', sans-serif;">Project Management Application</a>
+                    <a href="mindmap.png" target="_blank" style="margin-bottom: 20px; color: white; text-decoration: none; font-family: 'Arial', sans-serif;">PMA mindmap</a>
+                    <div class="close-button" id="closeLayer3Button">Close</div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+</header>
+<script>
+    document.getElementById("layer1Button").addEventListener("click", function () {
+        switchToLayer("layer1");
+    });
+
+    document.getElementById("layer2Button").addEventListener("click", function () {
+        switchToLayer("layer2");
+    });
+
+    document.getElementById("layer3Button").addEventListener("click", function () {
+        switchToLayer("layer3");
+    });
+
+    document.getElementById("closeLayer1Button").addEventListener("click", function () {
+        hideAllLayers();
+    });
+
+    document.getElementById("closeLayer2Button").addEventListener("click", function () {
+        hideAllLayers();
+    });
+
+    document.getElementById("closeLayer3Button").addEventListener("click", function () {
+        hideAllLayers();
+    });
+
+
+    function switchToLayer(layerId) {
+        hideAllLayers();
+        var layer = document.getElementById(layerId);
+        layer.style.display = "block";
+        document.getElementById(layerId + "Button").classList.add("expanded");
+    }
+
+    function hideAllLayers() {
+        var layers = document.getElementsByClassName("layer");
+        for (var i = 0; i < layers.length; i++) {
+            layers[i].style.display = "none";
+        }
+
+        var buttons = document.getElementsByTagName("button");
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove("expanded");
+        }
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/vendor/holder.min.js"></script>
+</body>
+</html>

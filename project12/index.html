@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js Clickable Signs</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+        }
+        canvas {
+            display: block;
+            background-color: black;
+        }
+        #notification {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            display: none;
+            z-index: 2000;
+        }
+        #homepageContent {
+            position: absolute;
+            width: 1024px;
+            height: 512px;
+            background-color: white;
+            display: none;
+            overflow: auto;
+            z-index: 2000;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="notification">Notification</div>
+    <div id="homepageContent"></div>
+    <script type="module" src="main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+</body>
+</html>
