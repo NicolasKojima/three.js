@@ -4,18 +4,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 
-// Fetch and load homepage.html content
-let homepageContentElement = document.getElementById('homepageContent');
-
-fetch('homepage.html')
-    .then(response => response.text())
-    .then(data => {
-        homepageContentElement.innerHTML = data;
-    })
-    .catch(error => {
-        console.error('Error fetching homepage.html:', error);
-    });
-
 // Scene, Camera, and Renderer Setup
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -93,32 +81,62 @@ const stem = new THREE.Mesh(stemGeometry, stemMaterial);
 stem.position.set(4, 1.5, 2); // Adjust the position to start at y=0 and go up to y=3
 scene.add(stem);
 
-// Create a canvas and draw fake website content
-const canvas = document.createElement('canvas');
-canvas.width = 1024;
-canvas.height = 512;
-const context = canvas.getContext('2d');
-context.fillStyle = '#ffffff';
-context.fillRect(0, 0, canvas.width, canvas.height);
-context.fillStyle = '#000000';
-context.font = '50px Arial';
-context.fillText('Welcome to My Fake Website', 50, 100);
-context.font = '30px Arial';
-context.fillText('This is a sample website content displayed on a 3D screen.', 50, 200);
-context.fillText('You can put any HTML content here.', 50, 250);
+function createHTMLTexture(htmlContent, width, height, position) {
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext('2d');
 
-// Create texture from canvas
-const texture = new THREE.CanvasTexture(canvas);
+    // Create an iframe to render the HTML content
+    const iframe = document.createElement('iframe');
+    document.body.appendChild(iframe);
+    iframe.style.position = 'absolute';
+    iframe.style.width = `${canvas.width}px`;
+    iframe.style.height = `${canvas.height}px`;
+    iframe.style.visibility = 'hidden';
 
-// Create rectangle with texture
-const screenGeometry1 = new THREE.BoxGeometry(0.1, 1.5, 3.6);
-const screenMaterial1 = new THREE.MeshStandardMaterial({ map: texture });
-const screen1 = new THREE.Mesh(screenGeometry1, screenMaterial1);
-screen1.position.set(0.4, 1.6, -1.1); // Adjust the position to start at y=0 and go up to y=3
-const angleInRadians = THREE.MathUtils.degToRad(16.5);
-screen1.rotation.y = angleInRadians;
-// Add the mesh to the scene
-scene.add(screen1);
+    iframe.contentDocument.open();
+    iframe.contentDocument.write(htmlContent);
+    iframe.contentDocument.close();
+
+    iframe.onload = () => {
+        // Wait a bit to ensure the content is rendered
+        setTimeout(() => {
+            context.drawImage(iframe, 0, 0, canvas.width, canvas.height);
+            document.body.removeChild(iframe);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            const screenGeometry = new THREE.BoxGeometry(0.1, height / 100, width / 100); // Adjust size to match canvas aspect ratio
+            const screenMaterial = new THREE.MeshStandardMaterial({ map: texture });
+            const screen = new THREE.Mesh(screenGeometry, screenMaterial);
+            screen.position.set(position.x, position.y, position.z);
+            screen.rotation.y = THREE.MathUtils.degToRad(16.5); // Apply rotation if needed
+            // Add the mesh to the scene
+            scene.add(screen);
+        }, 1000); // Adjust the delay as necessary
+    };
+}
+
+
+// Define the geometry and material for the rectangle
+// const rectangleGeometry = new THREE.BoxGeometry(0.1, 1.5, 3.6);
+// const rectangleMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 }); // You can change the color as needed
+// const rectangle = new THREE.Mesh(rectangleGeometry, rectangleMaterial);
+// const rectangleRadians = THREE.MathUtils.degToRad(16.5);
+// rectangle.rotation.y = rectangleRadians;
+// rectangle.position.set( 1, 1.6, -1.1);
+// scene.add(rectangle);
+
+
+// Fetch HTML content and create texture
+fetch('homepage.html')
+    .then(response => response.text())
+    .then(data => {
+        createHTMLTexture(data);
+    })
+    .catch(error => {
+        console.error('Error fetching homepage.html:', error);
+    });
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -321,10 +339,136 @@ window.addEventListener('click', (event) => {
 
                 // Show the back button and homepage content
                 showBackButton();
+
+                // Load and display the HTML content in the scene
+                const htmlContent = `<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/album/">
+    <style>
+        /* Styles from your HTML content */
+        /* Add all your CSS styles here */
+    </style>
+  </head>
+  <body>
+    <script>
+      for (let i = 0; i < 400; i++) {
+          const star = document.createElement('div');
+          star.className = 'stars';
+          star.style.left = \`\${Math.random() * 100}%\`;
+          star.style.top = \`\${Math.random() * 100}%\`;
+          star.style.animationDelay = \`\${Math.random() * 20}s\`; /* Randomize animation delays */
+          document.body.appendChild(star);
+      }
+    </script>
+    <header>
+      <nav>
+        <div class="background-snow" style="background-color:black;"></div>
+        <div class="background-stars"></div>
+        <div class="navbar">
+          <div class="logo"></div>
+          <div id="wrap">
+            <ul class="menu" class="navbar">
+              <li class="dropdown">
+                <a href="#" class="dropbtn">Resume</a>
+                <div class="dropdown-content">
+                  <a href="images/resume.pdf" >English</a>
+                  <a href="images/rirekisho.pdf" >Japanese</a>
+                </div>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropbtn">SNS</a>
+                <div class="dropdown-content">
+                  <a href="https://www.facebook.com/nicolas.kojima.7/"><i class="fab fa-facebook-f"></i></a>
+                  <a href="https://github.com/NicolasKojima"><i class="fab fa-github"></i></a>
+                  <a href="https://www.linkedin.com/in/nicolas-kojima-kallas/"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="content">
+        <div class="text-content">
+          <div class="self-intro">
+            <div class="text" style="margin-bottom: 1vh;">Hello, my name is </div>
+            <div class="name">Nicolas Kojima</div>
+            <div class="job">
+              <span class="aspiring-text"> I'm an aspiring </span>
+              <div class="typing-text">
+                <span> {{ </span>
+                <span class="one"> Software Engineer </span>
+                <span> }} </span>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="buttons">
+              <button class="button" id="layer1Button">About me</button>
+              <button class="button" id="layer2Button">Git Hub</button>
+              <button class="button" id="layer3Button">Developed Web Applications</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <script>
+      document.getElementById("layer1Button").addEventListener("click", function () {
+          switchToLayer("layer1");
+      });
+
+      document.getElementById("layer2Button").addEventListener("click", function () {
+          switchToLayer("layer2");
+      });
+
+      document.getElementById("layer3Button").addEventListener("click", function () {
+          switchToLayer("layer3");
+      });
+
+      document.getElementById("closeLayer1Button").addEventListener("click", function () {
+          hideAllLayers();
+      });
+
+      document.getElementById("closeLayer2Button").addEventListener("click", function () {
+          hideAllLayers();
+      });
+
+      document.getElementById("closeLayer3Button").addEventListener("click", function () {
+          hideAllLayers();
+      });
+
+      function switchToLayer(layerId) {
+          hideAllLayers();
+          var layer = document.getElementById(layerId);
+          layer.style.display = "block";
+          document.getElementById(layerId + "Button").classList.add("expanded");
+      }
+
+      function hideAllLayers() {
+          var layers = document.getElementsByClassName("layer");
+          for (var i = 0; i < layers.length; i++) {
+              layers[i].style.display = "none";
+          }
+
+          var buttons = document.getElementsByTagName("button");
+          for (var i = 0; i < buttons.length; i++) {
+              buttons[i].classList.remove("expanded");
+          }
+      }
+    </script>
+  </body>
+</html>`;
+                createHTMLTexture(htmlContent, 1024, 512, { x: 0.6, y: 1.6, z: -1.1 });
             }
         }
     }
 });
+
 
 function showNotification(message) {
     const notification = document.getElementById('notification');
