@@ -1,0 +1,36 @@
+
+Setup.js:
+
+this file is responsible for setting up the core elements of the three.js scene 
+including the scene, camera, renderer and orbit controls.
+
+Lightning.js
+
+This file contains the setup for various lights in the scene
+
+Models.js
+
+The purpose of this file is to handle the loading and addition of 3D models to the scene
+
+Helpers.js
+
+Contains utility functions that assist with various tasks, such as creating textures from HTML content
+the createHTMLTexture in this file is a function that takes html content, renders it onto a canvas and creates a three.js texture form that canvas and then uses this texture to create a 3D plane in the scene
+
+UI.js
+
+this file manages the creation and setup of user interface elements within the 3D scene such as signs with texture
+
+Animation.js
+
+conatins the animation loop that continuously updates the scene
+
+events.js
+
+manages even listeners for user interactions liek window resizing and mouse clicks
+
+main.js
+
+the entry point of the application, orchestrating the initialization and execution of different modules 
+
+
