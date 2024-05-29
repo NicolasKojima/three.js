@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { camera, renderer, controls } from './setup.js';
 import { signMeshes } from './ui.js';
+import { hideScreenImage } from './interactiveScreen.js';
 import TWEEN from '@tweenjs/tween.js';
 
 export const raycaster = new THREE.Raycaster();
@@ -42,6 +43,7 @@ function onMouseClick(event) {
             }
 
             if (clickedSign.text === 'projects') {
+                hideScreenImage();
                 moveCameraToScreen();
             }
         }
@@ -51,7 +53,7 @@ function onMouseClick(event) {
         const screenIntersects = raycaster.intersectObjects(interactiveElements);
         if (screenIntersects.length > 0) {
             const clickedElement = screenIntersects[0].object;
-            handleScreenInteraction(clickedElement);
+            clickedElement.userData.onClick();
         }
     }
 }
@@ -81,21 +83,24 @@ function moveCameraToScreen() {
         y: 2,
         z: -1.8
     };
+    const target = new THREE.Vector3(to.x - 3.5, to.y, to.z + 1);
+
     new TWEEN.Tween(from)
         .to(to, 2000)
         .easing(TWEEN.Easing.Quadratic.InOut)
         .onUpdate(() => {
             camera.position.set(from.x, from.y, from.z);
-            camera.lookAt(new THREE.Vector3(camera.position.x - 3.5, camera.position.y, camera.position.z + 1));
+            camera.lookAt(target);
+            controls.target.copy(target); // Update controls target
+            controls.update();
+        })
+        .onComplete(() => {
+            camera.position.set(to.x, to.y, to.z);
+            camera.lookAt(target);
+            controls.target.copy(target); // Ensure controls target is updated
+            controls.update();
         })
         .start();
-}
-
-function handleScreenInteraction(clickedElement) {
-    if (clickedElement.name === 'button') {
-        console.log('Button clicked');
-        // Add your button interaction logic here
-    }
 }
 
 function showBackButton() {
