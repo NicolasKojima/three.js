@@ -20,11 +20,11 @@ export function loadModels() {
         }
     );
 
-    const sphereGeometry = new THREE.SphereGeometry(0.2, 32, 32);
-    const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
-    const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-    sphere.position.set(-2, 4, -0.5);
-    scene.add(sphere);
+    // const sphereGeometry = new THREE.SphereGeometry(0.2, 32, 32);
+    // const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    // const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+    // sphere.position.set(0.5, 2.25,-1.2);
+    // scene.add(sphere);
 
     const stemGeometry = new THREE.BoxGeometry(0.1, 2.7, 0.1);
     const stemMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 });

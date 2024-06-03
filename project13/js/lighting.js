@@ -7,13 +7,13 @@ export function addLights() {
     scene.add(pointLight);
     console.log('Lights added to the scene'); // Check if lights are added
 
-    const pointLight1 = new THREE.PointLight(0xff00ff, 50, 100);
-    pointLight1.position.set(0.4, 3.8, -1);
-    scene.add(pointLight1);
+    // const pointLight1 = new THREE.PointLight(0xff00ff, 50, 100);
+    // pointLight1.position.set(0.4, 3.8, -1);
+    // scene.add(pointLight1);
 
-    const pointLight2 = new THREE.PointLight(0x1F51FF, 50, 100);
-    pointLight2.position.set(2.8, 2, 3.1);
-    scene.add(pointLight2);
+    // const pointLight2 = new THREE.PointLight(0x1F51FF, 50, 100);
+    // pointLight2.position.set(2.8, 2, 3.1);
+    // scene.add(pointLight2);
 
     const signLight1 = new THREE.PointLight(0xFFFFFF, 1, 10);
     signLight1.position.set(4.14, 2.7, 2);
