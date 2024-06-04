@@ -1,11 +1,8 @@
 import * as THREE from 'three';
-import { camera, renderer, controls } from './setup.js';
+import { camera, renderer, scene, controls, raycaster, mouse } from './setup.js'; // Ensure to import `controls`
 import { signMeshes } from './ui.js';
-import { hideScreenImage } from './interactiveScreen.js';
+import { hideScreenImage, showButtons } from './interactiveScreen.js';
 import TWEEN from '@tweenjs/tween.js';
-
-export const raycaster = new THREE.Raycaster();
-export const mouse = new THREE.Vector2();
 
 export function setupEvents() {
     window.addEventListener('resize', onWindowResize, false);
@@ -44,7 +41,11 @@ function onMouseClick(event) {
 
             if (clickedSign.text === 'projects') {
                 hideScreenImage();
+                showButtons();
                 moveCameraToScreen();
+            }
+            if (clickedSign.text === 'about me') {
+                moveCameraToScreen1();
             }
         }
     } else {
@@ -53,7 +54,9 @@ function onMouseClick(event) {
         const screenIntersects = raycaster.intersectObjects(interactiveElements);
         if (screenIntersects.length > 0) {
             const clickedElement = screenIntersects[0].object;
-            clickedElement.userData.onClick();
+            if (typeof clickedElement.userData.onClick === 'function') {
+                clickedElement.userData.onClick();
+            }
         }
     }
 }
@@ -61,7 +64,7 @@ function onMouseClick(event) {
 function showNotification(message) {
     const notification = document.getElementById('notification');
     if (notification) {
-        notification.textContent = message;
+        // notification.textContent = message;
         notification.style.display = 'block';
 
         setTimeout(() => {
@@ -102,6 +105,38 @@ function moveCameraToScreen() {
         })
         .start();
 }
+
+function moveCameraToScreen1() {
+    const from = {
+        x: camera.position.x,
+        y: camera.position.y,
+        z: camera.position.z
+    };
+    const to = { //(-1, 1.5, -5.6)
+        x: -1,
+        y: 1.5,
+        z: -5.6
+    };
+    const target = new THREE.Vector3(to.x, to.y, to.z + 1.1); //-1, 1.5, -4.5
+
+    new TWEEN.Tween(from)
+        .to(to, 2000)
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .onUpdate(() => {
+            camera.position.set(from.x, from.y, from.z);
+            camera.lookAt(target);
+            controls.target.copy(target); // Update controls target
+            controls.update();
+        })
+        .onComplete(() => {
+            camera.position.set(to.x, to.y, to.z);
+            camera.lookAt(target);
+            controls.target.copy(target); // Ensure controls target is updated
+            controls.update();
+        })
+        .start();
+}
+
 
 function showBackButton() {
     const backButton = document.getElementById('backButton');

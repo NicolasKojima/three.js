@@ -4,6 +4,7 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { scene } from './setup.js';
 import { createInteractiveScreen } from './interactiveScreen.js'; // Import the function
+import { createInteractiveScreen1 } from './interactiveScreen1.js'; // Import the function
 
 
 export function loadModels() {
@@ -20,11 +21,33 @@ export function loadModels() {
         }
     );
 
+    const arcadeMachineLoader = new GLTFLoader();
+    arcadeMachineLoader.load(
+        '/arcadeMachine/scene.gltf',
+        function (gltf) {
+            const arcadeMachine = gltf.scene;
+            arcadeMachine.position.set(-1, 0, -4.5); // Set the position of the model
+            arcadeMachine.scale.set(0.013, 0.013, 0.013);
+            arcadeMachine.rotation.y = Math.PI;
+            scene.add(arcadeMachine);
+        },
+        undefined,
+        function (error) {
+            console.error('An error happened loading the cabin model:', error);
+        }
+    );
+
     // const sphereGeometry = new THREE.SphereGeometry(0.2, 32, 32);
     // const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
     // const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-    // sphere.position.set(0.5, 2.25,-1.2);
+    // sphere.position.set(-1, 1.5, -5.6);
     // scene.add(sphere);
+
+    // const boxGeometry = new THREE.BoxGeometry(0.7, 0.7, 0.1);
+    // const boxMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 }); 
+    // const box = new THREE.Mesh(boxGeometry, boxMaterial);
+    // box.position.set(-1, 1.5, -4.5); // Set the position of the box
+    // scene.add(box);
 
     const stemGeometry = new THREE.BoxGeometry(0.1, 2.7, 0.1);
     const stemMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 });
@@ -138,4 +161,8 @@ export function loadModels() {
     //import code for interactive screen
     createInteractiveScreen();
 
+    createInteractiveScreen1();
+
+
 }
+
