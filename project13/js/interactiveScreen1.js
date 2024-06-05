@@ -1,8 +1,10 @@
 import * as THREE from 'three';
 import { scene, renderer, camera, controls } from './setup.js';
+import TWEEN from '@tweenjs/tween.js';
 
 let scrollOffset = 0;
 let canvas, context, texture, screen;
+let goBackButton1;
 
 export function createInteractiveScreen1() {
     // Define the 3D screen at the position of the rectangle
@@ -18,7 +20,7 @@ export function createInteractiveScreen1() {
     canvas.height = 512;
     context = canvas.getContext('2d');
 
-    // Set canvas background to green
+    // Set canvas background to black
     context.fillStyle = '#000000';
     context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -31,7 +33,7 @@ export function createInteractiveScreen1() {
     drawContent();
 
     // Add scroll event listener
-    window.addEventListener('wheel', onScroll, false);
+    window.addEventListener('wheel', onScroll, { passive: false });
 
     // Update loop to refresh the texture
     function animate() {
@@ -39,10 +41,12 @@ export function createInteractiveScreen1() {
         drawContent();
     }
     animate();
+
+    createGoBackButton1();
 }
 
 function drawContent() {
-    // Clear the canvas and set the background to green
+    // Clear the canvas and set the background to black
     context.fillStyle = '#000000';
     context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -53,15 +57,15 @@ function drawContent() {
     // Draw text lines
     const lines = [
         'Line 1: This is some scrollable text.',
-        'Line 2: This is a sample of a 3D website.',
-        'Line 3: wouldnt it be fucking amazing if .',
-        'Line 4: all website were made in 3D.',
-        'Line 5: and instead of just accessing the website',
-        'Line 6: you were able to go inside the website',
-        'Line 7: and experience it.',
-        'Line 8: All of this is source code and ',
-        'Line 9: on my github, if youre interested',
-        'Line 10: access my website and make your own!!'
+        'Line 2: You can add multiple lines.',
+        'Line 3: Scrolling is implemented.',
+        'Line 4: This is a demo of scrollable UI.',
+        'Line 5: Using canvas texture in THREE.js.',
+        'Line 6: More text here.',
+        'Line 7: Even more text.',
+        'Line 8: Keep adding lines.',
+        'Line 9: And it will scroll.',
+        'Line 10: Enjoy the demo!'
     ];
 
     const lineHeight = 30;
@@ -77,8 +81,101 @@ function drawContent() {
 }
 
 function onScroll(event) {
+    // Prevent default scrolling behavior
+    event.preventDefault();
+
     // Adjust the scroll offset based on the scroll event
     scrollOffset -= event.deltaY * 0.1;
     if (scrollOffset > 0) scrollOffset = 0; // Prevent scrolling up beyond the start
     if (scrollOffset < -300) scrollOffset = -300; // Adjust this value based on content height
+}
+
+export function moveCameraToScreen1() {
+    controls.enabled = false; // Disable controls to prevent movement
+
+    const from = {
+        x: camera.position.x,
+        y: camera.position.y,
+        z: camera.position.z
+    };
+    const to = {
+        x: -1,
+        y: 1.5,
+        z: -5.6
+    };
+    const target = new THREE.Vector3(to.x, to.y, to.z + 1.1);
+
+    new TWEEN.Tween(from)
+        .to(to, 2000)
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .onUpdate(() => {
+            camera.position.set(from.x, from.y, from.z);
+            camera.lookAt(target);
+            controls.target.copy(target); // Update controls target
+            controls.update();
+        })
+        .onComplete(() => {
+            camera.position.set(to.x, to.y, to.z);
+            camera.lookAt(target);
+            controls.target.copy(target); // Ensure controls target is updated
+            controls.update();
+            showBackButton1(); // Show the back button after moving the camera
+        })
+        .start();
+}
+
+function createGoBackButton1() {
+    goBackButton1 = document.createElement('button');
+    goBackButton1.id = 'backButton1';
+    goBackButton1.textContent = 'Back';
+    goBackButton1.style.position = 'absolute';
+    goBackButton1.style.top = '40px'; // Adjusted position to avoid conflict with the first back button
+    goBackButton1.style.left = '10px';
+    goBackButton1.style.zIndex = '2000';
+    goBackButton1.style.display = 'none';
+    goBackButton1.addEventListener('click', hideBackButton1);
+    document.body.appendChild(goBackButton1);
+}
+
+function showBackButton1() {
+    if (goBackButton1) {
+        goBackButton1.style.display = 'block';
+    } else {
+        console.error('Back button element not found');
+    }
+}
+
+function hideBackButton1() {
+    if (goBackButton1) {
+        goBackButton1.style.display = 'none';
+    }
+    const from = {
+        x: camera.position.x,
+        y: camera.position.y,
+        z: camera.position.z
+    };
+    const to = { // Original camera position
+        x: 10,
+        y: 5,
+        z: 0
+    };
+    const target = new THREE.Vector3(0, 0, 0);
+
+    new TWEEN.Tween(from)
+        .to(to, 2000)
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .onUpdate(() => {
+            camera.position.set(from.x, from.y, from.z);
+            camera.lookAt(target);
+            controls.target.copy(target); // Update controls target
+            controls.update();
+        })
+        .onComplete(() => {
+            camera.position.set(to.x, to.y, to.z);
+            camera.lookAt(target);
+            controls.target.copy(target); // Ensure controls target is updated
+            controls.update();
+            controls.enabled = true; // Enable controls to allow movement
+        })
+        .start();
 }

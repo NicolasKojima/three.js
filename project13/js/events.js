@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { camera, renderer, scene, controls, raycaster, mouse } from './setup.js'; // Ensure to import `controls`
 import { signMeshes } from './ui.js';
 import { hideScreenImage, showButtons } from './interactiveScreen.js';
+import { moveCameraToScreen1, createInteractiveScreen1 } from './interactiveScreen1.js'; // Ensure to import the correct function
 import TWEEN from '@tweenjs/tween.js';
 
 export function setupEvents() {
@@ -76,6 +77,8 @@ function showNotification(message) {
 }
 
 function moveCameraToScreen() {
+    controls.enabled = false; // Disable controls to prevent movement
+
     const from = {
         x: camera.position.x,
         y: camera.position.y,
@@ -106,64 +109,6 @@ function moveCameraToScreen() {
         .start();
 }
 
-function moveCameraToScreen1() {
-    const from = {
-        x: camera.position.x,
-        y: camera.position.y,
-        z: camera.position.z
-    };
-    const to = { //(-1, 1.5, -5.6)
-        x: -1,
-        y: 1.5,
-        z: -5.6
-    };
-    const target = new THREE.Vector3(to.x, to.y, to.z + 1.1); //-1, 1.5, -4.5
-
-    new TWEEN.Tween(from)
-        .to(to, 2000)
-        .easing(TWEEN.Easing.Quadratic.InOut)
-        .onUpdate(() => {
-            camera.position.set(from.x, from.y, from.z);
-            camera.lookAt(target);
-            controls.target.copy(target); // Update controls target
-            controls.update();
-        })
-        .onComplete(() => {
-            camera.position.set(to.x, to.y, to.z);
-            camera.lookAt(target);
-            controls.target.copy(target); // Ensure controls target is updated
-            controls.update();
-        })
-        .start();
-}
-
-
-function showBackButton() {
-    const backButton = document.getElementById('backButton');
-    backButton.style.display = 'block';
-
-    const rect = renderer.domElement.getBoundingClientRect();
-    // Adjust as necessary if homepageContentElement is used
-}
-
-function hideBackButton() {
-    const backButton = document.getElementById('backButton');
-    backButton.style.display = 'none';
-    camera.position.set(10, 5, 0);
-    controls.enabled = true;
-}
-
-const backButton = document.createElement('button');
-backButton.id = 'backButton';
-backButton.textContent = 'Back';
-backButton.style.position = 'absolute';
-backButton.style.top = '10px';
-backButton.style.left = '10px';
-backButton.style.zIndex = '2000';
-backButton.style.display = 'none';
-backButton.addEventListener('click', hideBackButton);
-document.body.appendChild(backButton);
-
 function slideIn(mesh) {
     const targetY = mesh.position.y;
     mesh.position.y -= 2;
@@ -172,3 +117,6 @@ function slideIn(mesh) {
         .easing(TWEEN.Easing.Elastic.Out)
         .start();
 }
+
+// Call createInteractiveScreen1 to initialize the screen
+createInteractiveScreen1();
