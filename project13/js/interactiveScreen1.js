@@ -127,9 +127,9 @@ export function moveCameraToScreen1() {
 function createGoBackButton1() {
     goBackButton1 = document.createElement('button');
     goBackButton1.id = 'backButton1';
-    goBackButton1.textContent = 'Back';
+    goBackButton1.textContent = 'Go Back';
     goBackButton1.style.position = 'absolute';
-    goBackButton1.style.top = '40px'; // Adjusted position to avoid conflict with the first back button
+    goBackButton1.style.top = '10px'; // Adjusted position to avoid conflict with the first back button
     goBackButton1.style.left = '10px';
     goBackButton1.style.zIndex = '2000';
     goBackButton1.style.display = 'none';
